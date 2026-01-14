@@ -12,9 +12,9 @@ Built on top of FFmpeg, it offers a simple, fast interface for batch processing 
 - [FFmpeg](https://ffmpeg.org/) and [FFprobe](https://ffmpeg.org/ffprobe.html): Should available in your system PATH.
 
 ## Installation from source
-
+- install directly from source
     ```bash
-    git clone https://github.com/voidsnax/revidx.git
+    git clone https://github.com/voidsnax/reVidx.git
     cd revidx
     pip install -e .
     ```
