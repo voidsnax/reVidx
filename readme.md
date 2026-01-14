@@ -21,81 +21,81 @@ Built on top of FFmpeg, it offers a simple, fast interface for batch processing 
 - [Python](https://www.python.org/): 3.7 or higher.
 Download from [here](https://www.python.org/downloads/)
 
-<details>
- <summary>or</summary>
+ <details>
+  <summary>or</summary>
 
-- On windows:
+    - On windows:
 
-    ```bash
-    winget install python
-    ```
+        ```bash
+        winget install python
+        ```
 
-- On Termux (android):
+    - On Termux (android):
 
-    ```bash
-    pkg install python
-    ```
+        ```bash
+        pkg install python
+        ```
 
-- On Mac (using Homebrew):
+    - On Mac (using Homebrew):
 
-    ```bash
-    brew install python
-    ```
+        ```bash
+        brew install python
+        ```
 
-- On Arch Linux:
+    - On Arch Linux:
 
-    ```bash
-    sudo pacman -S python
-    ```
+        ```bash
+        sudo pacman -S python
+        ```
 
-- On Ubuntu/Debian:
+    - On Ubuntu/Debian:
 
-    ```bash
-    sudo apt install python3
-    ```
-</details>
+        ```bash
+        sudo apt install python3
+        ```
+ </details>
 
 
 - [FFmpeg](https://ffmpeg.org/) and [FFprobe](https://ffmpeg.org/ffprobe.html): Should available in your system PATH.
 Download builds from [here](https://ffmpeg.org/download.html)
 
-<details>
- <summary>or</summary>
+ <details>
+  <summary>or</summary>
 
-- On Windows:
+    - On Windows:
 
-    ```bash
-    winget install BtbN.FFmpeg.GPL
-    ```
-    or
-    ```bash
-    winget install Gyan.FFmpeg
-    ```
+        ```bash
+        winget install BtbN.FFmpeg.GPL
+        ```
+        or
+        ```bash
+        winget install Gyan.FFmpeg
+        ```
 
-- On Termux (android):
+    - On Termux (android):
 
-    ```bash
-    pkg install ffmpeg
-    ```
+        ```bash
+        pkg install ffmpeg
+        ```
 
-- On Mac (using Homebrew):
+    - On Mac (using Homebrew):
 
-    ```bash
-    brew install ffmpeg
-    ```
+        ```bash
+        brew install ffmpeg
+        ```
 
-- On Arch Linux:
+    - On Arch Linux:
 
-    ```bash
-    sudo pacman -S ffmpeg
-    ```
+        ```bash
+        sudo pacman -S ffmpeg
+        ```
 
-- On Ubuntu/Debian:
+    - On Ubuntu/Debian:
 
-    ```bash
-    sudo apt install ffmpeg
-    ```
-</details>
+        ```bash
+        sudo apt install ffmpeg
+        ```
+ </details>
 
 
 ## Installation
