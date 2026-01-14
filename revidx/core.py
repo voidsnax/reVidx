@@ -57,78 +57,60 @@ class VideoProcessor:
             print_info(f"<< ",end='')
             print(f"{filename}\n")
 
-            # If duration is 0, just run a spinner until process finishes
+            # If duration is 0
             if total_duration == 0.0:
-                print_warning("Duration unknown.Progress bar disabled",end='',flush=True)
-                try:
-                    while process.poll() is None:
-                        spinner_idx = (spinner_idx + 1) % 4
-                        print(f"\r[ {Fore.CYAN}{spinners[spinner_idx]}{Style.RESET_ALL} ]", end='', flush=True)
-                        time.sleep(0.2)
-                except KeyboardInterrupt:
-                    process.kill()
-                    print_warning(">>",end='')
-                    print(f"{input_path}")
-                    print_error("\nProcess Aborted")
-                    sys.exit(1)
-
-                if process.poll() is not None and process.returncode == 0:
-                    print(f"\r[ {Fore.GREEN}✓{Style.RESET_ALL} ]")
-
-                print()
+                print_warning("Duration unknown.File Error")
+                print_error("!-> Exiting")
+                return False
 
             else:
                 current_time = 0.0
                 total_size = 0
                 start_clock = time.time()
                 last_display_time = 0
-                try:
-                    while True:
-                        if process.stdout:
-                            line = process.stdout.readline()
 
-                        if not line and process.poll() is not None:
-                            break
+                while True:
+                    if process.stdout:
+                        line = process.stdout.readline()
 
-                        if '=' in line:
-                            key, value = line.strip().split('=', 1)
+                    if not line and process.poll() is not None:
+                        break
 
-                            if key == 'out_time_us':
-                                current_time = int(value) / 1_000_000
-                            elif key == 'total_size':
-                                total_size = int(value)
-                            elif key == 'progress' and value == 'end':
-                                percent = 100
-                                status = f"[ {Fore.GREEN}✓{Style.RESET_ALL} ] Size: {format_bytes(total_size):<10}   Time: {format_seconds_hms(current_time)}/{format_seconds_hms(total_duration)}   {Fore.GREEN}{percent:5.1f}%{Style.RESET_ALL}     Elapsed: {format_seconds_hms(elapsed_wall_clock)}"
+                    if '=' in line:
+                        key, value = line.strip().split('=', 1)
 
-                                print(f"\r{status}", end='')
-                                break
-
-                        # Update display every 0.5s
-                        now = time.time()
-                        if (now - last_display_time > 0.5) and (current_time > 0):
-                            last_display_time = now
-                            elapsed_wall_clock = now - start_clock
-                            percent = (current_time / total_duration) * 100
-
-                            cur_str = format_seconds_hms(current_time)
-                            tot_str = format_seconds_hms(total_duration)
-                            elapsed_str = format_seconds_hms(elapsed_wall_clock)
-
-                            # Format: Size | Time/Total | % | Elapsed
-                            size_str = format_bytes(total_size)
-                            spinner_idx = (spinner_idx + 1) % 4
-                            spinner = spinners[spinner_idx]
-                            status = f"[ {Fore.CYAN}{spinner}{Style.RESET_ALL} ] Size: {size_str:<10}   Time: {cur_str}/{tot_str}   {Fore.GREEN}{percent:5.1f}%{Style.RESET_ALL}     Elapsed: {elapsed_str}"
+                        if key == 'out_time_us':
+                            current_time = int(value) / 1_000_000
+                        elif key == 'total_size':
+                            total_size = int(value)
+                        elif key == 'progress' and value == 'end':
+                            percent = 100
+                            elapsed_wall_clock = time.time() - start_clock
+                            status = f"[ {Fore.GREEN}✓{Style.RESET_ALL} ] Size: {format_bytes(total_size):<10}   Time: {format_seconds_hms(current_time)}/{format_seconds_hms(total_duration)}   {Fore.GREEN}{percent:5.1f}%{Style.RESET_ALL}     Elapsed: {format_seconds_hms(elapsed_wall_clock)}"
 
                             print(f"\r{status}", end='')
-                            sys.stdout.flush()
-                except KeyboardInterrupt:
-                    process.kill()
-                    print_warning(">>",end='')
-                    print(f"{input_path}")
-                    print_error("\nProcess Aborted")
-                    sys.exit(1)
+                            break
+
+                    # Update display every 0.5s
+                    now = time.time()
+                    if (now - last_display_time > 0.5) and (current_time > 0):
+                        last_display_time = now
+                        elapsed_wall_clock = now - start_clock
+                        percent = (current_time / total_duration) * 100
+
+                        cur_str = format_seconds_hms(current_time)
+                        tot_str = format_seconds_hms(total_duration)
+                        elapsed_str = format_seconds_hms(elapsed_wall_clock)
+
+                        # Spinner | Size | Time/Total | % | Elapsed
+                        size_str = format_bytes(total_size)
+                        spinner_idx = (spinner_idx + 1) % 4
+                        spinner = spinners[spinner_idx]
+                        status = f"[ {Fore.CYAN}{spinner}{Style.RESET_ALL} ] Size: {size_str:<10}   Time: {cur_str}/{tot_str}   {Fore.GREEN}{percent:5.1f}%{Style.RESET_ALL}     Elapsed: {elapsed_str}"
+
+                        print(f"\r{status}", end='')
+                        sys.stdout.flush()
+
                 print()
 
             # --- Check Result ---
@@ -141,18 +123,20 @@ class VideoProcessor:
                 if process.stderr:
                     stderr_output = process.stderr.read()
                     print_error(f"!-> FFmpeg exited with error code")
-                    if stderr_output:
-                        print_warning(f"Log -> {stderr_output}")
+                    print_warning(f"Log -> {stderr_output}")
                 return False
 
-        except Exception as e:
-            print_error(f"!!-> {e}")
+        except KeyboardInterrupt:
+            process.kill()
+            raise
+
+        except Exception:
+            print_error(f"!!-> File Error")
             return False
 
     def construct_commands(self, input_path, output_config, options):
         """
-        Constructs the ffmpeg argument list.
-        Returns a list of tuples: [(cmd_list, 'Label')]
+        Constructs the ffmpeg argument list.Returns a list.
         """
         commands = []
         a_idx = options.get('aindex')

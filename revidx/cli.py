@@ -120,7 +120,9 @@ def main():
                     print(f"{out_file}")
 
     except KeyboardInterrupt:
-        print_error("\nProcessing aborted by user.")
+        print_warning("\n>> ",end='')
+        print(f"{out_file}")
+        print_error("\nProcess Aborted")
         sys.exit(1)
 
 if __name__ == "__main__":

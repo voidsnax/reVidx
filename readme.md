@@ -1,8 +1,7 @@
 # reVidx
 
-![Python 3.6+](https://img.shields.io/badge/python-3.6%2B-blue)
-![FFmpeg](https://img.shields.io/badge/ffmpeg-grey?logo=FFmpeg&logoColor=green)
-![MIT License](https://img.shields.io/badge/license-MIT-green)
+![Python 3.7+](https://img.shields.io/badge/python-black?logo=python)
+![FFmpeg](https://img.shields.io/badge/ffmpeg-black?logo=FFmpeg&logoColor=green)
 
 reVidx is a cross-platform CLI tool designed to re-encode video files to AVC (H.264) codec and audio to MP3 for compatibility with legacy devices and players.
 
@@ -19,7 +18,7 @@ Built on top of FFmpeg, it offers a simple, fast interface for batch processing 
 
 ## Requirements
 
-- [Python](https://www.python.org/): 3.6 or higher.
+- [Python](https://www.python.org/): 3.7 or higher.
 Download from [here](https://www.python.org/downloads/) or
 
     - On windows:
@@ -106,7 +105,7 @@ Download builds from [here](https://ffmpeg.org/download.html) or
     ```
 
 ## Features
-- **Video Conversion**: Converts HEVC (H.265) to AVC (H.264) with proper pixel format and colour range settings for older device compatibility.
+- **Video Conversion**: Converts `HEVC` (H.265) to `AVC` (H.264) with proper pixel format and colour range settings for older device compatibility.
 
 - **Audio Conversion**: Encodes audio to  `mp3` (192kbps) for video files.
 
@@ -140,7 +139,7 @@ options:
 
 ### Basic Conversion
 
-Convert a video file to AVC/MP3. The output will be saved as input-AvcMp3.mp4.
+Convert a video file to `avc/mp3`. The output will be saved as `input-AvcMp3.mp4`.
 
 ```bash
 revidx inputvideo
@@ -148,7 +147,7 @@ revidx inputvideo
 
 ### Skip Video Encoding
 
-Convert the audio to MP3 and Keep the original video stream.
+Convert the audio to `mp3` and Keep the original video stream.
 
 ```bash
 revidx inputvideo -skip
@@ -192,11 +191,11 @@ revidx inputvideo -audio
 
 ## Notes
 
-- **Output Extensions**: When using -o to specify a filename, ensure it ends with `.mp4` or .`mkv` (video) or `.aac` (audio).
+- **Output Extensions**: When using `-o` to specify a filename, ensure it ends with `.mp4` or .`mkv` (video) or `.aac` (audio).
 - **Automatic Naming**: If no name is provided, output is saved as `input-AvcMp3.mp4` or `input.aac`.
 - **Overwriting**: The tool automatically overwrites existing files without prompting.
-- **Subtitles**: Ensure proper subtitle formats are passed when -burn is provided with external path.
-- **Interrupting**: Press Ctrl+C to abort the current encoding.
+- **Subtitles**: Subtitle index start from `0` and ensure proper subtitle formats are passed when `-burn` is provided with external path.
+- **Interrupting**: Press `Ctrl+C` to abort the current encoding.
 
 ## License
 
