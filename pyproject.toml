@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "revidx"
 version = "1.2.2"
 description = "reVidx: Re-encode video to AVC/MP3 for legacy compatibility."
-readme = "README.md"
+readme = "README-pypi.md"
 requires-python = ">=3.7"
 license = { text = "MIT" }
 authors =[
