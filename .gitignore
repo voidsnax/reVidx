@@ -1,2 +1,2 @@
 dist/
-revidx.egg-info/
+*.egg-info/
