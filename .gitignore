@@ -1,3 +1,4 @@
 dist/
 *.egg-info/
 revidx-testenv/
+__pycache__/
