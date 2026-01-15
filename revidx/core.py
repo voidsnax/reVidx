@@ -93,7 +93,7 @@ class VideoProcessor:
                                     f"{Fore.GREEN}✓{Style.RESET_ALL} "
                                     f"{size_str}{cur_str:>11}"
                                     f"{Fore.GREEN}{percent:>9.1f}%{Style.RESET_ALL}"
-                                    f"{"⏱ ":>5}{elapsed_str}"
+                                    f"{"⏱ ":>5}{elapsed_str:<10}"
                                 )
                             else:
                                 status = (
@@ -127,7 +127,7 @@ class VideoProcessor:
                                 f"{Fore.CYAN}{spinner}{Style.RESET_ALL} "
                                 f"{size_str}{cur_str:>11}"
                                 f"{Fore.GREEN}{percent:>8.1f}%{Style.RESET_ALL}"
-                                f"{"⏱ ":>5}{elapsed_str}"
+                                f"{"⏱ ":>5}{elapsed_str:<10}"
                             )
 
                         else:
