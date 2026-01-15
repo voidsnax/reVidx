@@ -124,7 +124,7 @@ class VideoProcessor:
                         if is_android():
                             # Spinner | Size | Time | % | Elapsed
                             status = (
-                                f"{Fore.GREEN}✓{Style.RESET_ALL} "
+                                f"{Fore.CYAN}{spinner}{Style.RESET_ALL} "
                                 f"{size_str}{cur_str:>11}"
                                 f"{Fore.GREEN}{percent:>8.1f}%{Style.RESET_ALL}"
                                 f"{"⏱ ":>5}{elapsed_str}"
