@@ -9,7 +9,8 @@ from .utils import (
     print_warning,
     print_info,
     format_bytes,
-    format_seconds_hms
+    format_seconds_hms,
+    is_android
 )
 
 class VideoProcessor:
@@ -86,7 +87,21 @@ class VideoProcessor:
                         elif key == 'progress' and value == 'end':
                             percent = 100
                             elapsed_wall_clock = time.time() - start_clock
-                            status = f"[ {Fore.GREEN}✓{Style.RESET_ALL} ] Size: {format_bytes(total_size):<10}   Time: {format_seconds_hms(current_time)}/{format_seconds_hms(total_duration)}   {Fore.GREEN}{percent:5.1f}%{Style.RESET_ALL}     Elapsed: {format_seconds_hms(elapsed_wall_clock)}"
+
+                            if is_android():
+                                status = (
+                                    f"{Fore.GREEN}✓{Style.RESET_ALL}  "
+                                    f"{size_str}    {cur_str}    "
+                                    f"{Fore.GREEN}{percent:.1f}%{Style.RESET_ALL}    "
+                                    f"⏱ {elapsed_str}"
+                                )
+                            else:
+                                status = (
+                                    f"[ {Fore.GREEN}✓{Style.RESET_ALL} ] "
+                                    f"Size: {size_str}    Time: {cur_str}/{tot_str}    "
+                                    f"{Fore.GREEN}{percent:.1f}%{Style.RESET_ALL}    "
+                                    f"Elapsed: {elapsed_str}"
+                                )
 
                             print(f"\r{status}", end='')
                             break
@@ -102,11 +117,27 @@ class VideoProcessor:
                         tot_str = format_seconds_hms(total_duration)
                         elapsed_str = format_seconds_hms(elapsed_wall_clock)
 
-                        # Spinner | Size | Time/Total | % | Elapsed
                         size_str = format_bytes(total_size)
                         spinner_idx = (spinner_idx + 1) % 4
                         spinner = spinners[spinner_idx]
-                        status = f"[ {Fore.CYAN}{spinner}{Style.RESET_ALL} ] Size: {size_str:<10}   Time: {cur_str}/{tot_str}   {Fore.GREEN}{percent:5.1f}%{Style.RESET_ALL}     Elapsed: {elapsed_str}"
+
+                        if is_android():
+                            # Spinner | Size | Time | % | Elapsed
+                            status = (
+                                f"{Fore.CYAN}{spinner}{Style.RESET_ALL}  "
+                                f"{size_str}    {cur_str}    "
+                                f"{Fore.GREEN}{percent:.1f}%{Style.RESET_ALL}    "
+                                f"{Fore.CYAN}⏱{Style.RESET_ALL} {elapsed_str}"
+                            )
+
+                        else:
+                            # Spinner | Size | Time/Total | % | Elapsed
+                            status = (
+                                f"[ {Fore.CYAN}{spinner}{Style.RESET_ALL} ] "
+                                f"Size: {size_str}    Time: {cur_str}/{tot_str}    "
+                                f"{Fore.GREEN}{percent:.1f}%{Style.RESET_ALL}    "
+                                f"Elapsed: {elapsed_str}"
+                            )
 
                         print(f"\r{status}", end='')
                         sys.stdout.flush()
