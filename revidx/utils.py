@@ -47,3 +47,6 @@ def print_warning(msg,end='\n',flush=False): print(f"{Fore.YELLOW}{msg}{Style.RE
 
 def print_info(msg,end='\n'): print(f"{Fore.CYAN}{msg}{Style.RESET_ALL}",end=end)
 
+def is_android():
+    import sys
+    return hasattr(sys, 'getandroidapilevel')
