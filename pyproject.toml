@@ -23,7 +23,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/voidsnax/revidx"
+Homepage = "https://github.com/voidsnax/reVidx"
 
 [project.scripts]
 revidx = "revidx.cli:main"
