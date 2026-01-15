@@ -90,9 +90,9 @@ class VideoProcessor:
 
                             if is_android():
                                 status = (
-                                    f"{Fore.GREEN}✓{Style.RESET_ALL}  "
-                                    f"{size_str}    {cur_str}    "
-                                    f"{Fore.GREEN}{percent:.1f}%{Style.RESET_ALL}    "
+                                    f"{Fore.GREEN}✓{Style.RESET_ALL} "
+                                    f"{size_str}   {cur_str}   "
+                                    f"{Fore.GREEN}{percent:.1f}%{Style.RESET_ALL}   "
                                     f"⏱ {elapsed_str}"
                                 )
                             else:
@@ -124,10 +124,10 @@ class VideoProcessor:
                         if is_android():
                             # Spinner | Size | Time | % | Elapsed
                             status = (
-                                f"{Fore.CYAN}{spinner}{Style.RESET_ALL}  "
-                                f"{size_str}    {cur_str}    "
-                                f"{Fore.GREEN}{percent:.1f}%{Style.RESET_ALL}    "
-                                f"{Fore.CYAN}⏱{Style.RESET_ALL} {elapsed_str}"
+                                f"{Fore.CYAN}{spinner}{Style.RESET_ALL} "
+                                f"{size_str}   {cur_str}   "
+                                f"{Fore.GREEN}{percent:.1f}%{Style.RESET_ALL}   "
+                                f"⏱ {elapsed_str}"
                             )
 
                         else:
@@ -161,8 +161,11 @@ class VideoProcessor:
             process.kill()
             raise
 
-        except Exception:
-            print_error(f"!!-> File Error")
+        except Exception as e:
+            print_error(f"!!-> Error occured while processing file")
+            print_error(f"Log -> {e}")
+            if process.poll() is None:
+                process.kill()
             return False
 
     def construct_commands(self, input_path, output_config, options):
