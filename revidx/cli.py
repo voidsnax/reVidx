@@ -12,9 +12,9 @@ from .utils import (
 def main():
     try:
         parser = argparse.ArgumentParser(
-            usage="revidx INPUTFILES ... [OPTIONS]",
+            usage="revidx INPUTFILES... [OPTIONS]",
             description="reVidx: Convert HEVC to AVC and Audio to MP3/AAC.",
-            epilog="Requires 'ffmpeg' and 'ffprobe'.\n" \
+            epilog="Requires 'ffmpeg' and 'ffprobe'.\n"
             "Docs & issues: https://github.com/voidsnax/reVidx",
             formatter_class=argparse.RawTextHelpFormatter
         )
