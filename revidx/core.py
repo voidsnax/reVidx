@@ -90,15 +90,15 @@ class VideoProcessor:
 
                             if is_android():
                                 status = (
-                                    f"{cur_str}   {size_str}   "
-                                    f"{Fore.GREEN}{percent}%{Style.RESET_ALL}    "
-                                    f"{Fore.GREEN}{"✓ "}{Style.RESET_ALL}{elapsed_str}"
+                                    f"{cur_str} {size_str:>9}"
+                                    f"{Fore.GREEN}{percent:>8}%{Style.RESET_ALL}   "
+                                    f"✓ {elapsed_str}"
                                 )
                             else:
                                 status = (
                                     f"[ {Fore.GREEN}✓{Style.RESET_ALL} ] "
-                                    f"Size: {size_str}    Time: {cur_str}/{tot_str}    "
-                                    f"{Fore.GREEN}{percent}%{Style.RESET_ALL}    "
+                                    f"Size: {size_str:>9}    {"Time: "}{cur_str}/{tot_str}"
+                                    f"{Fore.GREEN}{percent:>8}%{Style.RESET_ALL}    "
                                     f"{"Elapsed: "}{elapsed_str}"
                                 )
 
@@ -125,13 +125,13 @@ class VideoProcessor:
                             status = (
                                 f"{cur_str} {size_str:>9}"
                                 f"{Fore.GREEN}{percent:>8.1f}%{Style.RESET_ALL}   "
-                                f"{Fore.CYAN}{spinner}{Style.RESET_ALL}  {elapsed_str}"
+                                f"{Fore.BLUE}{spinner}{Style.RESET_ALL} {elapsed_str}"
                             )
 
                         else:
                             # Spinner | Size | Time/Total | % | Elapsed
                             status = (
-                                f"[ {Fore.CYAN}{spinner}{Style.RESET_ALL} ] "
+                                f"[ {Fore.BLUE}{spinner}{Style.RESET_ALL} ] "
                                 f"Size: {size_str:>9}    {"Time: "}{cur_str}/{tot_str}"
                                 f"{Fore.GREEN}{percent:>8.1f}%{Style.RESET_ALL}    "
                                 f"{"Elapsed: "}{elapsed_str}"
