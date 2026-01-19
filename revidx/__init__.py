@@ -1,4 +1,4 @@
 """
 reVidx: A CLI tool to re-encode video for legacy compatibility using FFmpeg.
 """
-__version__ = "1.3.3"
+__version__ = "1.3.4"
