@@ -39,13 +39,13 @@ def format_seconds_hms(seconds):
     return f"{h:02d}:{m:02d}:{s:02d}"
 
 # --- Colored Output Helpers ---
-def print_error(msg,end='\n'): print(f"{Fore.RED}{msg}{Style.RESET_ALL}",end=end)
+def print_error(msg,end='\n'): print(f"{Fore.RED}{msg}",end=end)
 
-def print_success(msg,end='\n',flush=False): print(f"{Fore.GREEN}{msg}{Style.RESET_ALL}",end=end,flush=flush)
+def print_success(msg,end='\n',flush=False): print(f"{Fore.GREEN}{msg}",end=end,flush=flush)
 
-def print_warning(msg,end='\n',flush=False): print(f"{Fore.YELLOW}{msg}{Style.RESET_ALL}",end=end,flush=flush)
+def print_warning(msg,end='\n',flush=False): print(f"{Fore.YELLOW}{msg}",end=end,flush=flush)
 
-def print_info(msg,end='\n'): print(f"{Fore.CYAN}{msg}{Style.RESET_ALL}",end=end)
+def print_info(msg,end='\n'): print(f"{Fore.CYAN}{msg}",end=end)
 
 def is_android():
     import sys
