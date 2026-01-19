@@ -2,7 +2,7 @@ import subprocess
 import sys
 import time
 import os
-from colorama import Fore, init
+from colorama import Fore, Style
 from .utils import (
     escape_path_for_filter,
     print_error,
@@ -13,7 +13,6 @@ from .utils import (
     is_android
 )
 
-init(autoreset=True)
 
 class VideoProcessor:
     def __init__(self, ffmpeg_path="ffmpeg", ffprobe_path="ffprobe"):
@@ -92,15 +91,15 @@ class VideoProcessor:
 
                             if is_android():
                                 status = (
-                                    f"{cur_str} {Fore.YELLOW}{size_str:>9}"
-                                    f"{Fore.GREEN}{percent:>8}%   "
+                                    f"{cur_str} {Fore.YELLOW}{size_str:>9}{Style.RESET_ALL}"
+                                    f"{Fore.GREEN}{percent:>8}%{Style.RESET_ALL}   "
                                     f"✓ {elapsed_str}"
                                 )
                             else:
                                 status = (
-                                    f"[ {Fore.GREEN}✓ ] "
-                                    f"Size: {Fore.YELLOW}{size_str:>9}    {"Time: "}{cur_str}/{tot_str}"
-                                    f"{Fore.GREEN}{percent:>8}%    "
+                                    f"[ {Fore.GREEN}✓{Style.RESET_ALL} ] "
+                                    f"Size: {Fore.YELLOW}{size_str:>9}{Style.RESET_ALL}    {"Time: "}{cur_str}/{tot_str}"
+                                    f"{Fore.GREEN}{percent:>8}%{Style.RESET_ALL}    "
                                     f"{"Elapsed: "}{elapsed_str}"
                                 )
 
@@ -125,17 +124,17 @@ class VideoProcessor:
                         if is_android():
                             # Spinner | Size | Time | % | Elapsed
                             status = (
-                                f"{cur_str} {Fore.YELLOW}{size_str:>9}"
-                                f"{Fore.GREEN}{percent:>8.1f}%   "
-                                f"{Fore.BLUE}{spinner} {elapsed_str}"
+                                f"{cur_str} {Fore.YELLOW}{size_str:>9}{Style.RESET_ALL}"
+                                f"{Fore.GREEN}{percent:>8.1f}%{Style.RESET_ALL}   "
+                                f"{Fore.BLUE}{spinner}{Style.RESET_ALL} {elapsed_str}"
                             )
 
                         else:
                             # Spinner | Size | Time/Total | % | Elapsed
                             status = (
-                                f"[ {Fore.BLUE}{spinner} ] "
-                                f"Size: {Fore.YELLOW}{size_str:>9}    {"Time: "}{cur_str}/{tot_str}"
-                                f"{Fore.GREEN}{percent:>8.1f}%    "
+                                f"[ {Fore.BLUE}{spinner}{Style.RESET_ALL} ] "
+                                f"Size: {Fore.YELLOW}{size_str:>9}{Style.RESET_ALL}    {"Time: "}{cur_str}/{tot_str}"
+                                f"{Fore.GREEN}{percent:>8.1f}%{Style.RESET_ALL}    "
                                 f"{"Elapsed: "}{elapsed_str}"
                             )
 
