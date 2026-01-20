@@ -68,8 +68,8 @@ Download builds from [here](https://ffmpeg.org/download.html)
 - Or install from source:
 
     ```bash
-    git clone https://github.com/voidsnax/revidx.git
-    cd revidx
+    git clone https://github.com/voidsnax/reVidx.git
+    cd reVidx
     pip install -e .
     ```
 
