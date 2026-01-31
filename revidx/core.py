@@ -33,7 +33,7 @@ class VideoProcessor:
         except (subprocess.CalledProcessError, ValueError):
             return 0.0
 
-    def run_ffmpeg(self, args, input_path, filename):
+    def run_ffmpeg(self, args, input_path, filename, file_count, counter):
         """
         Runs FFmpeg.
         """
@@ -57,12 +57,17 @@ class VideoProcessor:
             spinner_idx = 0
 
             print_info(f"<< ",end='')
-            print(f"{filename}\n")
+            print(f"{filename}")
+
+            if file_count > 1:
+                print(f"{Fore.GREEN}{counter}{Style.RESET_ALL} of {Fore.BLUE}{file_count}{Style.RESET_ALL}")
+            else:
+                print()
 
             # If duration is 0
             if total_duration == 0.0:
                 print_warning("Duration unknown.File Error")
-                print_error("!-> Exiting")
+                print_error("Exiting")
                 return False
 
             else:
@@ -88,6 +93,8 @@ class VideoProcessor:
                         elif key == 'progress' and value == 'end':
                             percent = 100
                             elapsed_wall_clock = time.time() - start_clock
+                            size_str = format_bytes(total_size)
+                            cur_str = format_seconds_hms(current_time)
 
                             if is_android():
                                 status = (
@@ -122,7 +129,7 @@ class VideoProcessor:
                         spinner = spinners[spinner_idx]
 
                         if is_android():
-                            # Spinner | Size | Time | % | Elapsed
+                            # Time | Size | % | Spinner | Elapsed
                             status = (
                                 f"{cur_str} {Fore.YELLOW}{size_str:>9}{Style.RESET_ALL}"
                                 f"{Fore.GREEN}{percent:>8.1f}%{Style.RESET_ALL}   "
@@ -152,7 +159,7 @@ class VideoProcessor:
             else:
                 if process.stderr:
                     stderr_output = process.stderr.read()
-                    print_error(f"!-> FFmpeg exited with error code")
+                    print_error(f"FFmpeg exited with error code")
                     print_warning(f"Log -> {stderr_output}")
                 return False
 
@@ -161,7 +168,7 @@ class VideoProcessor:
             raise
 
         except Exception as e:
-            print_error(f"!!-> Error occured while processing file")
+            print_error(f"Error occured while processing file")
             print_error(f"Log -> {e}")
             if process.poll() is None:
                 process.kill()

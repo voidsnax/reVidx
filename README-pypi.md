@@ -8,8 +8,8 @@ Built on top of FFmpeg, it offers a simple, fast interface for batch processing 
 
 ## Requirements
 
-- [Python](https://www.python.org/): 3.7 or higher.
-- [FFmpeg](https://ffmpeg.org/) and [FFprobe](https://ffmpeg.org/ffprobe.html): Should available in your system PATH.
+- [Python](https://www.python.org/)
+- [FFmpeg](https://ffmpeg.org/) and [FFprobe](https://ffmpeg.org/ffprobe.html)
 
 ## Installation from source
 - Install directly from github repo
@@ -47,11 +47,12 @@ options:
   -h, --help          show this help message and exit
   -o [PATH/NAME]      Output directory or filename
   -skip               Skip video encoding (copy)
-  -burn [INDEX/PATH]  Burn subtitles into the video (default: first subtitle stream from input)
+  -burn [INDEX/PATH]  Burn subtitles into the video (default: 0)
   -aindex INDEX       Audio index (default: 0)
   -audio              Extract only audio to AAC
   -crf VALUE          CRF value (default: 20)
 ```
+*Note: You can use ffprobe to get file info*
 
 ### Basic Conversion
 
@@ -103,6 +104,20 @@ Extract the audio track to an `aac` file.
 
 ```bash
 revidx inputvideo -audio
+```
+
+### Batch Processing
+
+Convert all `mkv` files in current dir to `avc/mp3`
+
+```bash
+revidx *.mkv inputvideo
+```
+
+Convert all files in current dir to `avc/mp3`
+
+```bash
+revidx ./* inputvideo
 ```
 
 ## Notes
