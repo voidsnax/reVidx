@@ -66,8 +66,7 @@ class VideoProcessor:
 
             # If duration is 0
             if total_duration == 0.0:
-                print_warning("Duration unknown.File Error")
-                print_error("Exiting")
+                print_error("Duration unknown.File Error")
                 return False
 
             else:
@@ -88,8 +87,10 @@ class VideoProcessor:
 
                         if key == 'out_time_us':
                             current_time = int(value) / 1_000_000
+
                         elif key == 'total_size':
                             total_size = int(value)
+
                         elif key == 'progress' and value == 'end':
                             percent = 100
                             elapsed_wall_clock = time.time() - start_clock
@@ -160,7 +161,7 @@ class VideoProcessor:
                 if process.stderr:
                     stderr_output = process.stderr.read()
                     print_error(f"FFmpeg exited with error code")
-                    print_warning(f"Log -> {stderr_output}")
+                    print_warning(f"{stderr_output}")
                 return False
 
         except KeyboardInterrupt:
@@ -169,7 +170,7 @@ class VideoProcessor:
 
         except Exception as e:
             print_error(f"Error occured while processing file")
-            print_error(f"Log -> {e}")
+            print_error(f"{e}")
             if process.poll() is None:
                 process.kill()
             return False
@@ -178,7 +179,6 @@ class VideoProcessor:
         """
         Constructs the ffmpeg argument list.Returns a list.
         """
-        commands = []
         a_idx = options.get('aindex')
         audio_map = ['-map', f'0:a:{a_idx}']
 
@@ -196,10 +196,18 @@ class VideoProcessor:
                 sub_path = escape_path_for_filter(input_path)
                 vf_filter = f"subtitles={sub_path}:si={burn_val}"
 
-        # Logic to create video file
-        make_video = (not options.get('audio_only')) or options.get('burn')
+        if options.get('audio_only'):
+            output_file = output_config['audio']
+            cmd = ['-y', '-i', input_path]
+            cmd.extend([
+                '-vn',
+                '-c:a', 'aac',
+                '-b:a', '128k',
+                *audio_map
+            ])
+            cmd.append(output_file)
 
-        if make_video:
+        else:
             output_file = output_config['video']
             cmd = ['-y', '-i', input_path, '-map', '0:v:0']
 
@@ -224,18 +232,5 @@ class VideoProcessor:
                 *audio_map
             ])
             cmd.append(output_file)
-            commands.append(cmd)
 
-        if options.get('audio_only'):
-            output_file = output_config['audio']
-            cmd = ['-y', '-i', input_path]
-            cmd.extend([
-                '-vn',
-                '-c:a', 'aac',
-                '-b:a', '128k',
-                *audio_map
-            ])
-            cmd.append(output_file)
-            commands.append(cmd)
-
-        return commands
+        return cmd

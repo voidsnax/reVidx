@@ -38,15 +38,10 @@ def main():
 
         processor = VideoProcessor(ffmpeg_path, ffprobe_path)
 
-        # Logic Checks
-        if args.skip:
-            if args.burn or args.audio:
-                print_error("-skip cannot be used with -burn or -audio.")
-                sys.exit(1)
-
         multi_input = len(args.inputfiles) > 1
-        if multi_input and args.burn and args.burn != 'DEFAULT':
-            print_error("Cannot specify specific subtitle for multiple inputs.")
+        if multi_input and args.burn != 'DEFAULT':
+            print_error("Cannot provide subtitle stream for multiple inputs.")
+            print_warning("Leave it empty for using the default.")
             sys.exit(1)
 
         # Options
@@ -65,7 +60,7 @@ def main():
         counter = 0
 
         for input_arg in args.inputfiles:
-            input_files += glob(input_arg)
+            input_files.extend(glob(input_arg))
         if not input_files:
             print_error(f"No valid files found")
             sys.exit(1)
@@ -113,23 +108,21 @@ def main():
                 'audio': output_audio_path
             }
 
-            commands = processor.construct_commands(file, output_config, options)
+            cmd = processor.construct_commands(file, output_config, options)
 
-            # sequential execution
-            for cmd in commands:
-                out_file = cmd[-1]
-                # print(*cmd)
-                success = processor.run_ffmpeg(cmd, file, os.path.basename(file), total_files, counter)
+            out_file = cmd[-1]
+            # print(*cmd)
+            success = processor.run_ffmpeg(cmd, file, os.path.basename(file), total_files, counter)
 
-                if success:
-                    print_success(f">> ",end='')
-                    print(f"{out_file}")
-                else:
-                    print_error(f">> ",end='')
-                    print(f"{out_file}")
+            if success:
+                print_success(f">> ",end='')
+                print(f"{out_file}")
+            else:
+                print_error(f">> ",end='')
+                print(f"{out_file}")
 
-                if not counter == total_files:
-                    print()
+            if not counter == total_files:
+                print()
 
     except KeyboardInterrupt:
         print_warning("\n>> ",end='')
