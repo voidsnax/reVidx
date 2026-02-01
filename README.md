@@ -20,7 +20,7 @@ Built on top of FFmpeg, it offers a simple, fast interface for batch processing 
 
 - [Python](https://www.python.org/)
 
-- [FFmpeg](https://ffmpeg.org/) and [FFprobe](https://ffmpeg.org/ffprobe.html)
+- [FFmpeg](https://ffmpeg.org/) and [FFprobe](https://ffmpeg.org/ffprobe.html) - 
 Download builds from [here](https://ffmpeg.org/download.html)
 
     <details>
