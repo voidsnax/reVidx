@@ -38,12 +38,6 @@ def main():
 
         processor = VideoProcessor(ffmpeg_path, ffprobe_path)
 
-        multi_input = len(args.inputfiles) > 1
-        if multi_input and args.burn != 'DEFAULT':
-            print_error("Cannot provide subtitle stream for multiple inputs.")
-            print_warning("Leave it empty for using the default.")
-            sys.exit(1)
-
         # Options
         options = {
             'skip_video': args.skip,
@@ -52,9 +46,6 @@ def main():
             'audio_only': args.audio,
             'crf': args.crf if args.crf is not None else 20
         }
-
-        if multi_input and args.burn:
-            print_warning("Processing multiple files with -burn. Default subtitles used.")
 
         input_files = []
         counter = 0
@@ -66,6 +57,15 @@ def main():
             sys.exit(1)
 
         total_files = len(input_files)
+        multi_input = total_files > 1
+
+        if multi_input:
+            if args.burn and args.burn != 'DEFAULT':
+                print_error("Cannot provide subtitle stream for multiple inputs.")
+                print_warning("Leave it empty for using the default.")
+                sys.exit(1)
+            if args.burn:
+                print_warning("Processing multiple files with -burn. Default subtitles used.")
 
         # Process
         for file in input_files:
